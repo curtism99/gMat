@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gMat.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Margin="20,10">
+
+            <!-- Button Container -->
+            <Button x:Name="SelectFileButton"
+            Text="Select File..."
+            Clicked="SelectFileButton_Clicked"
+            BackgroundColor="Transparent"
+            TextColor="#0A84FF"
+            BorderColor="#0A84FF"
+            BorderWidth="2"
+            CornerRadius="10"
+            Margin="0,10,0,5" />
+
+            <Button x:Name="TranscribeButton"
+            Text="Transcribe Audio"
+            Clicked="TranscribeButton_Clicked"
+            BackgroundColor="#0A84FF"
+            TextColor="White"
+            CornerRadius="10"
+            Margin="0,5,0,10"
+            IsEnabled="False" />
+
+            <!-- Loading Spinner -->
+            <ActivityIndicator x:Name="LoadingSpinner" 
+                       IsRunning="False" 
+                       IsVisible="False"
+                       Color="#0A84FF"
+                       HorizontalOptions="Center" />
+
+            <!-- Output Container -->
+            <Label Text="Transcription Output:"
+           TextColor="#E0E0E0"
+           FontSize="18"
+           FontAttributes="Bold"
+           Margin="0,20,0,10"/>
+
+            <Frame BackgroundColor="#1E1E1E" 
+           BorderColor="#3A3A3A" 
+           Padding="10" 
+           CornerRadius="10" 
+           VerticalOptions="FillAndExpand">
+                <ScrollView>
+                    <Label x:Name="TranscriptionOutputLabel"
+                   Text="Select an audio file to begin..."
+                   TextColor="#B0B0B0"
+                   FontSize="16" />
+                </ScrollView>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
