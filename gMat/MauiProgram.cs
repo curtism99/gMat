@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace gMat
 {
@@ -18,6 +20,26 @@ namespace gMat
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            // --- Start of Configuration Code ---
+
+            // Add configuration from appsettings.json
+            var a = Assembly.GetExecutingAssembly();
+            using var stream = a.GetManifestResourceStream("gMat.appsettings.json");
+            var config = new ConfigurationBuilder()
+                .AddJsonStream(stream)
+                .Build();
+
+            builder.Configuration.AddConfiguration(config);
+
+            // Register IConfiguration for DI
+            builder.Services.AddSingleton<IConfiguration>(config);
+            builder.Services.AddSingleton<MainPage>();
+
+            builder
+                .UseMauiApp<App>();
+
+            // --- End of Configuration Code ---
 
             return builder.Build();
         }

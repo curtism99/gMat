@@ -1,16 +1,25 @@
-﻿using System.Net.Http.Headers;
+﻿using Microsoft.Extensions.Configuration;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace gMat
 {
     public partial class MainPage : ContentPage
     {
-        private const string GroqApiKey = "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";
+        private readonly IConfiguration _configuration;
+        private readonly string _groqApiKey;
+        private readonly string _transcriptionBaseUrl;
+
         private FileResult selectedFile;
 
-        public MainPage()
+        public MainPage(IConfiguration configuration)
         {
             InitializeComponent();
+            _configuration = configuration;
+
+            // Access the setting using "SectionName:SettingName"
+            _groqApiKey = _configuration["Settings:ApiKey"];
+            _transcriptionBaseUrl = _configuration["Settings:ApiBaseUrl"];
         }
 
 
@@ -88,7 +97,7 @@ namespace gMat
                 }
 
                 using var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GroqApiKey);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _groqApiKey);
                 using var formData = new MultipartFormDataContent();
                 using var fileStream = await fileToUpload.OpenReadAsync();
                 using var streamContent = new StreamContent(fileStream);
@@ -96,7 +105,7 @@ namespace gMat
                 streamContent.Headers.ContentType = new MediaTypeHeaderValue(fileToUpload.ContentType ?? "audio/mpeg");
                 formData.Add(streamContent, "file", fileToUpload.FileName);
                 formData.Add(new StringContent("whisper-large-v3"), "model");
-                var response = await client.PostAsync("https://api.groq.com/openai/v1/audio/transcriptions", formData);
+                var response = await client.PostAsync(_transcriptionBaseUrl, formData);
 
                 if (response.IsSuccessStatusCode)
                 {
