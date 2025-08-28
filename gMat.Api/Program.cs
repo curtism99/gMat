@@ -22,11 +22,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 // --- END: Add Forwarded Headers Configuration ---
-// Force Kestrel to listen on 0.0.0.0:80
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(80);
-});
 
 var app = builder.Build();
 

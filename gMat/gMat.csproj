@@ -41,6 +41,38 @@
   <PropertyGroup>
     <NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationId>com.dcc.gmat</ApplicationId>
+  </PropertyGroup>
   
 	<ItemGroup>
 		<!-- App Icon -->

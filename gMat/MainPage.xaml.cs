@@ -75,62 +75,26 @@ namespace gMat
             {
                 if (selectedFile.FileName.EndsWith(".aac", StringComparison.OrdinalIgnoreCase))
                 {
-                    string tempOggPath = null;
+                    string tempMp3Path = null;
                     try
                     {
                         // 1. Get the local path to the converted .ogg file
-                        tempOggPath = await GetConvertedOggFilePathAsync(selectedFile.FullPath);
+                        tempMp3Path = await GetConvertedOggFilePathAsync(selectedFile.FullPath);
 
-                        if (string.IsNullOrEmpty(tempOggPath))
+                        if (string.IsNullOrEmpty(tempMp3Path))
                         {
                             Console.WriteLine("Could not prepare the audio file for transcription.");
                             return;
                         }
 
-                        // 2. Pass the local file path to your transcription service
-                        //    (This is the method you already have)
-                        var transcriptionResult = ConvertAudioFileAsync(tempOggPath);
-
-                        // Do something with the result...
-                        Console.WriteLine($"Transcription: {transcriptionResult}");
-
-                        fileToUpload = new FileResult(tempOggPath);
+                        fileToUpload = new FileResult(tempMp3Path);
                     }
                     catch (Exception ex)
                     {
                         // Handle any errors during transcription
                         Console.WriteLine($"An error occurred during transcription: {ex.Message}");
                     }
-                    finally
-                    {
-                        // 3. CRITICAL: Clean up the temporary file
-                        if (!string.IsNullOrEmpty(tempOggPath) && File.Exists(tempOggPath))
-                        {
-                            try
-                            {
-                                File.Delete(tempOggPath);
-                                Console.WriteLine($"Cleaned up temporary file: {tempOggPath}");
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Failed to delete temporary file: {ex.Message}");
-                            }
-                        }
-                    }
-                    ////TranscriptionOutputLabel.Text = "Converting .aac to .mp3...";
-                    //TranscriptionOutputLabel.Text = "Cannot upload .aac files directly. Please convert to .mp3 or .ogg first.";
-                    //tempFileFullPath = Path.Combine(FileSystem.CacheDirectory, $"temp_{Guid.NewGuid()}.mp3");
-                    ////string command = $"-i \"{selectedFile.FullPath}\" -b:a 192k \"{tempFileFullPath}\"";
-                    ////fileToUpload = await ConvertAacToMp3(selectedFile.FileName, tempFileFullPath);
-
-                    //fileToUpload.FileName = await GetConvertedOggFilePathAsync(selectedFile.FileName);
-
-                    //if (fileToUpload.FileName.EndsWith(".aac", StringComparison.OrdinalIgnoreCase))
-                    //{
-                    //    TranscriptionOutputLabel.Text = "Failed to convert .aac file.";
-                    //}
                 }
-   
 
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _groqApiKey);
@@ -181,7 +145,7 @@ namespace gMat
             //string apiUrl = "http://10.0.2.2:5129/api/conversion/convert-to-ogg"; // Use your HTTP port
                                                                                   // Then in your method:
             string baseUrl = GetApiBaseUrl();
-            string apiUrl = $"{baseUrl}/api/conversion/convert-to-ogg";
+            string apiUrl = $"{baseUrl}/api/Conversion/convert-to-mp3";
 
             // On iOS simulator, you can use localhost:
             // string apiUrl = "http://localhost:5000/api/conversion/convert-to-ogg";
@@ -243,13 +207,13 @@ namespace gMat
             {
                 // 2. Define a path for the temporary file in the app's cache directory.
                 // FileSystem.CacheDirectory is the correct cross-platform way to get this location.
-                string tempFileName = $"{Guid.NewGuid()}.ogg";
+                string tempFileName = $"{Guid.NewGuid()}.mp3";
                 string tempFilePath = Path.Combine(FileSystem.CacheDirectory, tempFileName);
 
                 // 3. Write the byte array to the temporary file
                 await File.WriteAllBytesAsync(tempFilePath, oggData);
 
-                Console.WriteLine($"Temporary .ogg file saved at: {tempFilePath}");
+                Console.WriteLine($"Temporary .mp3 file saved at: {tempFilePath}");
 
                 // 4. Return the path to the newly created file
                 return tempFilePath;
@@ -276,6 +240,9 @@ namespace gMat
             // For physical devices, you'd need your machine's local IP, e.g., "http://192.168.1.100:5129"
             // This is a more complex scenario requiring you to fetch the IP dynamically or configure it.
             // For now, we'll default to localhost for other platforms like Windows.
+
+            return "https://gmat-e8ccfbhbegebg9fd.centralus-01.azurewebsites.net";
+
         }
 
 
