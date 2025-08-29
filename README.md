@@ -27,7 +27,7 @@ graph TD
     E -- 4. Returns converted .mp3 --> D;
     D --> C;
     C -- 5. Returns .mp3 to App (HTTPS) --> B;
-    B -- 6. Saves temp .mp3 & sends to Transcription Service --> G((Transcription Service));
+    B -- 6. Saves temp .mp3 & sends to Transcription Service --> G((Groq Transcription Service));
     G -- 7. Returns text --> B;
     B -- 8. Displays text --> A;
 ```
